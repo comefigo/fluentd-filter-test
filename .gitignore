@@ -1,0 +1,4 @@
+**/buffer
+**.pos
+httpd.pid
+access_log*

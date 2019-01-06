@@ -1,0 +1,5 @@
+FROM fluent/fluentd
+
+RUN /usr/bin/fluent-gem install fluent-plugin-forest fluent-plugin-ignore-filter fluent-plugin-copy_ex fluent-plugin-s3
+
+RUN mkdir /fluentd/buffer

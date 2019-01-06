@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  web:
+    image: httpd
+    container_name: httpd
+    env_file: 
+      - common.env
+    volumes:
+      - ./httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./logs:/usr/local/apache2/logs
+    ports:
+      - 80:80
+  log_sender:
+    build:
+      context: ./
+      dockerfile: Dockerfile_log_sender
+    image: log_sender
+    container_name: log_sender
+    env_file:
+      - common.env
+    volumes:
+      - ./log_sender/fluent.conf:/fluentd/etc/fluent.conf
+      - ./logs:/fluentd/log
+  log_receive:
+    build:
+      context: ./
+      dockerfile: Dockerfile_log_receive
+    image: log_receive
+    container_name: log_receive
+    env_file: 
+      - common.env
+    volumes:
+      - ./log_receive/fluent.conf:/fluentd/etc/fluent.conf
